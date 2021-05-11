@@ -14,10 +14,22 @@ router.post("/signup", async (req, res) => {
 });
 
 // Listar todos os rooms disponiveis [cRud]
-router.get("/room", async (req, res) => {
+router.get("/rooms", async (req, res) => {
   try {
     const result = await RoomModel.find();
     return res.status(201).json(result);
+  } catch (err) {
+    return res.status(500).json({ msg: JSON.stringify(err) });
+  }
+});
+
+// Listar room especifico [cRud]
+router.get("/room/:id", async (req, res) => {
+  try {
+    const result = await RoomModel.findOne({ _id: req.params.id }).populate(
+      "reviews"
+    );
+    return res.status(200).json(result);
   } catch (err) {
     return res.status(500).json({ msg: JSON.stringify(err) });
   }

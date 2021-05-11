@@ -1,3 +1,6 @@
+// Configurando o servidor para ter acesso às variáveis de ambiente do sistema operacional
+require("dotenv").config();
+
 const express = require("express");
 
 const app = express();
@@ -15,6 +18,12 @@ app.use(express.json());
 // Importar os roteadores
 const roomRouter = require("./routes/room.routes");
 app.use("/", roomRouter);
+
+const reviewRouter = require("./routes/review.routes");
+app.use("/", reviewRouter);
+
+const userRouter = require("./routes/user.routes");
+app.use("/", userRouter);
 
 // Subir o servidor web para escutar as requisições
 app.listen(PORT, () => console.log(`Server up at PORT ${PORT}`));
