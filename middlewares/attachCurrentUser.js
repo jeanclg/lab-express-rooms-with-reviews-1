@@ -1,9 +1,10 @@
 const UserModel = require("../models/User.model");
 
+// Exporta o usuario para a proxima middleware ou rota
 module.exports = async (req, res, next) => {
   try {
     const loggedInUser = req.user;
-
+    // Filtra o usuario passado pela autenticação no banco e retorna o usuario SEM senha, NUNCA retorne esse usuario com a senha
     const user = await UserModel.findOne(
       { _id: loggedInUser._id },
       { passwordHash: 0 },
